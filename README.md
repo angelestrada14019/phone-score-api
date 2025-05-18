@@ -54,3 +54,10 @@ Para desplegar este proyecto en Railway, sigue los siguientes pasos:
 5. **Verifica el despliegue:** Una vez que el despliegue sea exitoso, Railway te proporcionará una URL donde podrás acceder a tu aplicación.
 
 **Nota:** Asegúrate de que tu archivo `requirements.txt` liste todas las dependencias necesarias para que Railway pueda instalarlas correctamente durante el proceso de construcción.
+
+## Contribuciones
+
+Este proyecto fue posible gracias a las contribuciones de:
+*   Daniela Alarcon
+*   Milmax Duque
+*   Angel Estrada
