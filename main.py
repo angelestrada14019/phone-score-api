@@ -208,7 +208,7 @@ def fallback_evaluate_smartphone(input_data: SmartphoneInput) -> dict:
         "price_range": price_range,
         "metrics": {
             "gaming_potential": gaming_potential,
-            "battery_performance": battery_performance
+            "battery_performance": battery_performance,
             "photography": photography,
             "display_quality": display_quality
         },
