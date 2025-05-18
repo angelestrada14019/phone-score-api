@@ -43,7 +43,6 @@ class SmartphoneInput(BaseModel):
 class MetricsOutput(BaseModel):
     gaming_potential: int  # 0-100
     battery_performance: int  # 0-100
-    cost_effectiveness: int  # 0-100
     photography: int  # 0-100
     display_quality: int  # 0-100
 
@@ -201,7 +200,6 @@ def fallback_evaluate_smartphone(input_data: SmartphoneInput) -> dict:
     # Calculate specific metrics
     gaming_potential = round((ram_score * 0.6) + (battery_score * 0.2) + (storage_score * 0.2))
     battery_performance = round(battery_score)
-    cost_effectiveness = round((100 - (ram_score + storage_score) / 2) * 0.7 + 50)
     photography = round(camera_score)
     display_quality = round(display_score)
     
@@ -210,8 +208,7 @@ def fallback_evaluate_smartphone(input_data: SmartphoneInput) -> dict:
         "price_range": price_range,
         "metrics": {
             "gaming_potential": gaming_potential,
-            "battery_performance": battery_performance,
-            "cost_effectiveness": cost_effectiveness,
+            "battery_performance": battery_performance
             "photography": photography,
             "display_quality": display_quality
         },
@@ -244,7 +241,6 @@ def evaluate_smartphone(input_data: SmartphoneInput) -> SmartphoneEvaluation:
             metrics = {
                 "gaming_potential": int(result['puntajes_tecnicos'].get('gaming', 50)),
                 "battery_performance": int(result['puntajes_tecnicos'].get('bateria', 50)),
-                "cost_effectiveness": int(result['puntajes_tecnicos'].get('costo_beneficio', 50)),
                 "photography": int(result['puntajes_tecnicos'].get('fotografia', 50)),
                 "display_quality": int(result['puntajes_tecnicos'].get('pantalla', 50))
             }
