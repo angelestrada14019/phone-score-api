@@ -1,4 +1,4 @@
-# Analizador de Teléfonos Pro
+# Analizador de Teléfonos
 
 Este proyecto es una aplicación web construida con FastAPI que evalúa smartphones basándose en sus especificaciones técnicas y proporciona métricas de rendimiento, rango de precio estimado y recomendaciones.
 
