@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from typing import Dict, List, Union, Optional
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from * import PhoneAnalyzer
+from analyzer import PhoneAnalyzer
 import random
 import asyncio
 import time
