@@ -21,6 +21,102 @@ from sklearn.preprocessing import label_binarize
 
 from xgboost import XGBClassifier
 
+def extract_camera_specs(text):
+    try:
+        cameras = re.findall(r'(\d+\.?\d*MP)', str(text))
+        primary = float(cameras[0].replace('MP','')) if cameras else 0.0
+        return primary, len(cameras)
+    except:
+        return 0.0, 0
+
+# def parse_display(text):
+#     tech = 'LCD'
+#     refresh_rate = 60  # Valor por defecto
+
+#     try:
+#         text = str(text).upper()
+#         for pattern in ['AMOLED','LCD','OLED']:
+#             if re.search(pattern, text):
+#                 tech = pattern
+#                 break
+
+#         refresh_match = re.search(r'(\d+)HZ', text)
+#         if refresh_match:
+#             refresh_rate = int(refresh_match.group(1))
+#     except:
+#         pass
+
+#     return tech, refresh_rate
+def parse_display(text):
+    tech = 'LCD'  # Valor por defecto
+    refresh_rate = 60  # Valor por defecto
+
+    try:
+        text = str(text).upper()
+
+        # Regex para cada tipo principal
+        amoled_regex = r'\b(SUPER\s?AMOLED|DYNAMIC\s?AMOLED|SAMOLED|AMOLED)\b'
+        lcd_regex = r'\b(TFT|IPS(\s?LCD)?|PLS(\s?LCD)?|LCD|LTPS|IGZO)\b'
+        oled_regex = r'\b(OLED|P[\s-]?OLED|POLED)\b'
+
+        if re.search(amoled_regex, text, re.IGNORECASE):
+            tech = 'AMOLED'
+        elif re.search(oled_regex, text, re.IGNORECASE):
+            tech = 'OLED'
+        elif re.search(lcd_regex, text, re.IGNORECASE):
+            tech = 'LCD'
+        else:
+          tech = 'LCD'
+
+        # Buscar tasa de refresco
+        refresh_match = re.search(r'(\d+)\s?HZ', text, re.IGNORECASE)
+        if refresh_match:
+            refresh_rate = int(refresh_match.group(1))
+
+    except Exception as e:
+        tech = 'LCD'
+        print(f"Error parsing display info: {e}")
+        pass
+
+    return tech, refresh_rate
+
+def clean_storage(value):
+    try:
+        if pd.isna(value) or str(value).upper() == 'NA':
+            return 0.0
+        return float(str(value).replace('TB','').strip())
+    except:
+        return 0.0
+
+def classify_gama(row):
+    try:
+
+        model = str(row['name']).upper()
+
+        score = 0
+        # Reglas basadas en nomenclatura Samsung
+        if re.search(r'S\d+|ULTRA|Z\s*FOLD|FLIP|NOTE', model):
+            return 'HIGH'
+        elif re.search(r'A0\d|M0\d|F\d{2}|J\d|GURU|METRO|GT|SM-', model):
+            return 'LOW'
+        elif re.search(r'A\d{2}|M\d{2}', model):
+            return 'MID'
+        else:
+            return 'LOW'
+
+        # Reglas basadas en specs
+        score += row['primary_camera_mp']/row['primary_camera_mp'].max()
+        score += min(row['num_cameras']/row['num_cameras'].max(), 1)
+        score += row['refresh_rate']/90
+        score += row['storage_ram(GB)']/row['storage_ram(GB)'].max()
+        score += row['5G_support']*0.5
+        score += row['battery']/row['battery'].max()
+
+        return 'HIGH' if score > 2.0 else 'MID' if score > 1.2 else 'LOW'
+    except:
+
+        return 'LOW'
+
 class PhoneAnalyzer:
     def __init__(self):
         self.scaler = StandardScaler()
