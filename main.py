@@ -240,10 +240,10 @@ def evaluate_smartphone(input_data: SmartphoneInput) -> SmartphoneEvaluation:
             
             # Extract technical scores
             metrics = {
-                "gaming_potential": int(result['puntajes_tecnicos'].get('gaming', 50)),
-                "battery_performance": int(result['puntajes_tecnicos'].get('bateria', 50)),
-                "photography": int(result['puntajes_tecnicos'].get('fotografia', 50)),
-                "display_quality": int(result['puntajes_tecnicos'].get('pantalla', 50))
+                "gaming_potential": int(float(result['puntajes_tecnicos'].get('gaming', 0.5)) * 100),
+                "battery_performance": int(float(result['puntajes_tecnicos'].get('bateria', 0.5)) * 100),
+                "photography": int(float(result['puntajes_tecnicos'].get('fotografia', 0.5)) * 100),
+                "display_quality": int(float(result['puntajes_tecnicos'].get('pantalla', 0.5)) * 100)
             }
             
             # Calculate overall score as average of metrics
