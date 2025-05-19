@@ -1,3 +1,26 @@
+import pandas as pd
+import numpy as np
+import re
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import StandardScaler, LabelEncoder, RobustScaler, StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingRegressor
+from sklearn.metrics import classification_report, mean_squared_error, r2_score, confusion_matrix
+import joblib
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
+from sklearn.metrics import classification_report, accuracy_score, mean_squared_error, r2_score, confusion_matrix
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (accuracy_score, confusion_matrix, classification_report,
+                             roc_curve, auc, precision_recall_curve, ConfusionMatrixDisplay,
+                             RocCurveDisplay, PrecisionRecallDisplay)
+from itertools import cycle
+from sklearn.preprocessing import label_binarize
+
+from xgboost import XGBClassifier
+
 class PhoneAnalyzer:
     def __init__(self):
         self.scaler = StandardScaler()
