@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Dict, List, Union, Optional
 import uvicorn
+from phone_analyzer import PhoneAnalyzer 
 from fastapi.middleware.cors import CORSMiddleware
 import random
 import asyncio
