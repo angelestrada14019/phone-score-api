@@ -38,7 +38,7 @@ class SmartphoneInput(BaseModel):
     primary_camera: str  # e.g. "108MP + 12MP + 5MP + 5MP"
     display: str  # e.g. "Full HD+ Dynamic AMOLED 2X"
     network: str  # e.g. "5G, 4G, 3G, 2G"
-    battery: int  # in mAh
+    battery: str  # in mAh
 
 class MetricsOutput(BaseModel):
     gaming_potential: int  # 0-100
