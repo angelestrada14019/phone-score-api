@@ -203,7 +203,12 @@ class PhoneAnalyzer:
         df[['primary_camera_mp', 'num_cameras']] = df['primary_camera'].apply(extract_camera_specs).apply(pd.Series)
         df[['display_tech', 'refresh_rate']] = df['display'].apply(parse_display).apply(pd.Series)
         df['5G_support'] = df['network'].str.contains('5G', na=False).astype(int)
-        df['display_tech'] = self.display_encoder.fit_transform(df['display_tech'] )
+        tech_quality = {
+            'AMOLED': 0,
+            'OLED': 1,
+            'LCD': 2
+        }
+        df['display_tech'] = df['display_tech'].map(tech_quality).fillna(0).astype(int)
 
 
         return df
