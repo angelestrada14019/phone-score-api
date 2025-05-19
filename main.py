@@ -101,7 +101,7 @@ def adapt_input_for_model(input_data: SmartphoneInput):
         'primary_camera': input_data.primary_camera,
         'display': input_data.display,
         'network': input_data.network,
-        'battery': battery_str
+        'battery': input_data.battery
     }
 
 def map_category_to_api(category: str) -> str:
@@ -249,20 +249,21 @@ def evaluate_smartphone(input_data: SmartphoneInput) -> SmartphoneEvaluation:
             overall_score = round(sum(metrics.values()) / len(metrics))
             
         else:
+            print("Model not available, using fallback evaluation")
             # Use fallback evaluation if model isn't available
-            fallback_result = fallback_evaluate_smartphone(input_data)
-            performance_category = fallback_result["performance_category"]
-            price_range = fallback_result["price_range"]
-            metrics = fallback_result["metrics"]
-            overall_score = fallback_result["overall_score"]
+            # fallback_result = fallback_evaluate_smartphone(input_data)
+            # performance_category = fallback_result["performance_category"]
+            # price_range = fallback_result["price_range"]
+            # metrics = fallback_result["metrics"]
+            # overall_score = fallback_result["overall_score"]
     
     except Exception as e:
         print(f"Error using model, falling back to calculation: {str(e)}")
-        fallback_result = fallback_evaluate_smartphone(input_data)
-        performance_category = fallback_result["performance_category"]
-        price_range = fallback_result["price_range"]
-        metrics = fallback_result["metrics"]
-        overall_score = fallback_result["overall_score"]
+        # fallback_result = fallback_evaluate_smartphone(input_data)
+        # performance_category = fallback_result["performance_category"]
+        # price_range = fallback_result["price_range"]
+        # metrics = fallback_result["metrics"]
+        # overall_score = fallback_result["overall_score"]
     
     # Generate user recommendation
     if performance_category == "HIGH" and metrics["gaming_potential"] > 80:
