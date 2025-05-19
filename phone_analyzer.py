@@ -326,11 +326,11 @@ class PhoneAnalyzer:
         tech_scores = {
             'fotografia': 0.4*(phone_df.get('primary_camera_mp', 0).iloc[0]/200) +
                         0.6*(phone_df.get('num_cameras', 0).iloc[0]/5),
-            'gaming': 0.7*(phone_df.get('refresh_rate', 60).iloc[0]/240) +
-                    0.3*(phone_df.get('storage_ram(GB)', 0).iloc[0]/16),
+            'gaming': 0.2*(phone_df.get('refresh_rate', 60).iloc[0]/240) +
+                    0.8*(phone_df.get('storage_ram(GB)', 0).iloc[0]/16),
             'bateria': phone_df.get('battery', 0).iloc[0]/10000,
-            'pantalla': 0.5*(phone_df.get('refresh_rate', 60).iloc[0]/240) +
-                    0.5*(phone_df.get('display_tech', 0).iloc[0]/3)}
+            'pantalla': 0.1*(phone_df.get('refresh_rate', 60).iloc[0]/240) +
+                    0.9 * ({0: 3, 1: 2, 2: 1}.get(phone_df.get('display_tech', 0).iloc[0], 0) / 3)}
 
         return {
             'gama': gama,
