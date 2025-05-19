@@ -51,7 +51,7 @@ class SmartphoneEvaluation(SmartphoneInput):
     id: str
     overall_score: int  # 0-100
     performance_category: str  # "LOW" | "MID" | "HIGH"
-    price_range: str  # e.g. "$300 - $400"
+    # price_range: str  # e.g. "$300 - $400"
     user_recommendation: str
     metrics: MetricsOutput
 
@@ -183,20 +183,20 @@ def fallback_evaluate_smartphone(input_data: SmartphoneInput) -> dict:
         performance_category = "LOW"
         
     # Calculate price estimation
-    base_price = (
-        input_data.internal_storage * 0.5 + 
-        input_data.storage_ram * 100 + 
-        mp_sum * 3 + 
-        (300 if "amoled" in input_data.display.lower() else 
-         250 if "oled" in input_data.display.lower() else 
-         150 if "lcd" in input_data.display.lower() else 100) + 
-        (200 if "5g" in input_data.network.lower() else 100) + 
-        input_data.battery / 20
-    )
+    # base_price = (
+    #     input_data.internal_storage * 0.5 + 
+    #     input_data.storage_ram * 100 + 
+    #     mp_sum * 3 + 
+    #     (300 if "amoled" in input_data.display.lower() else 
+    #      250 if "oled" in input_data.display.lower() else 
+    #      150 if "lcd" in input_data.display.lower() else 100) + 
+    #     (200 if "5g" in input_data.network.lower() else 100) + 
+    #     input_data.battery / 20
+    # )
     
-    min_price = round(base_price * 0.9)
-    max_price = round(base_price * 1.1)
-    price_range = f"${min_price} - ${max_price}"
+    # min_price = round(base_price * 0.9)
+    # max_price = round(base_price * 1.1)
+    # price_range = f"${min_price} - ${max_price}"
     
     # Calculate specific metrics
     gaming_potential = round((ram_score * 0.6) + (battery_score * 0.2) + (storage_score * 0.2))
@@ -206,7 +206,7 @@ def fallback_evaluate_smartphone(input_data: SmartphoneInput) -> dict:
     
     return {
         "performance_category": performance_category,
-        "price_range": price_range,
+        # "price_range": price_range,
         "metrics": {
             "gaming_potential": gaming_potential,
             "battery_performance": battery_performance,
@@ -236,7 +236,7 @@ def evaluate_smartphone(input_data: SmartphoneInput) -> SmartphoneEvaluation:
             
             # Extract results from the model output
             performance_category = map_category_to_api(result['gama'])
-            price_range = f"${result['precio_estimado']}"
+            # price_range = f"${result['precio_estimado']}"
             
             # Extract technical scores
             metrics = {
@@ -291,7 +291,7 @@ def evaluate_smartphone(input_data: SmartphoneInput) -> SmartphoneEvaluation:
         battery=input_data.battery,
         overall_score=overall_score,
         performance_category=performance_category,
-        price_range=price_range,
+        # price_range=price_range,
         user_recommendation=user_recommendation,
         metrics=MetricsOutput(**metrics)
     )
