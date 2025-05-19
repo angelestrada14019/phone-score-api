@@ -22,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model_path = Path("phone_analyzer_pro.pkl")
+model_path = Path("phone_analyzer_pro.joblib")
 try:
     analyzer = joblib.load(model_path)
     print(f"Successfully loaded model from {model_path}")
